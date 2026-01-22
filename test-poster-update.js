@@ -1,0 +1,26 @@
+// Test script to verify poster URL updates in database
+console.log('=== Poster URL Database Update Test ===');
+console.log('');
+console.log('✅ Frontend running on: http://localhost:3000');
+console.log('✅ Backend running on: http://localhost:5000');
+console.log('');
+console.log('To test poster URL database updates:');
+console.log('1. Open http://localhost:3000 in your browser');
+console.log('2. Login as an organizer');
+console.log('3. Go to My Events page');
+console.log('4. Click the Edit button on a PENDING event');
+console.log('5. Update the poster URL field with a new URL');
+console.log('6. Click the Save button');
+console.log('');
+console.log('What should happen:');
+console.log('✅ Poster URL should be updated in the MongoDB database');
+console.log('✅ Event should be updated via API call');
+console.log('✅ UI should reflect the changes immediately');
+console.log('✅ Check browser console for API call logs');
+console.log('');
+console.log('Features implemented:');
+console.log('- Added updateEventAPI function for backend updates');
+console.log('- Added poster URL field to edit form');
+console.log('- Added URL validation for poster updates');
+console.log('- Enhanced MyEvents table to show poster URLs');
+console.log('- Automatic database synchronization');

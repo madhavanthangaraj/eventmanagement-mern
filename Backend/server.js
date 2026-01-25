@@ -9,7 +9,10 @@ const { createSuperAdmin } = require('./utils/initialSetup');
 const userRoutes = require('./routes/user.routes');
 const eventRoutes = require('./routes/event.routes');
 const organizerRoutes = require('./routes/organizer.routes');
+const adminEventRoutes = require('./routes/adminEvent.routes');
 const healthRoutes = require('./routes/health.routes');
+const studentRoutes = require('./routes/student.routes');
+const mentorRoutes = require('./routes/mentor.routes');
 
 const app = express();
 
@@ -80,7 +83,10 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/superadmin', superadminRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/events', eventRoutes);
+app.use('/api/admin/events', adminEventRoutes);
 app.use('/api/organizer', organizerRoutes);
+app.use('/api/student', studentRoutes);
+app.use('/api/mentor', mentorRoutes);
 app.use('/api/health', healthRoutes);
 
 // Error handling middleware

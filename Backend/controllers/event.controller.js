@@ -94,17 +94,67 @@ exports.getAllEvents = async (req, res, next) => {
             query.organizerEmail = req.user.email;
         }
         
-        // If admin, only show events from their department
-        if (req.user.role === 'ADMIN') {
-            query.organizerDepartment = req.user.department;
+        // Get regular events
+        const regularEvents = await Event.find(query).sort({ createdAt: -1 });
+        
+        // Get admin events (only if not organizer, since organizers don't create admin events)
+        let adminEvents = [];
+        if (req.user.role !== 'ORGANIZER') {
+            const AdminEvent = require('../models/AdminEvent');
+            let adminQuery = {};
+            
+            // If admin, only show admin events from their department
+            if (req.user.role === 'ADMIN') {
+                adminQuery.createdByDepartment = req.user.department;
+            }
+            
+            adminEvents = await AdminEvent.find(adminQuery).sort({ createdAt: -1 });
         }
+        
+        // Merge both types of events
+        const allEvents = [...regularEvents, ...adminEvents].sort((a, b) => 
+            new Date(b.createdAt) - new Date(a.createdAt)
+        );
 
-        const events = await Event.find(query).sort({ createdAt: -1 });
+        // Normalize event data to have consistent field names
+        const normalizedEvents = allEvents.map(event => {
+            // If it's an admin event, normalize field names
+            if (event.eventTitle) {
+                return {
+                    ...event._doc,
+                    id: event._id,
+                    eventName: event.eventTitle,
+                    organizerName: event.organizingCollegeName,
+                    organizerDepartment: event.createdByDepartment,
+                    date: event.startDate,
+                    endDate: event.endDate,
+                    registrationDeadline: event.registrationDeadline,
+                    maxParticipants: event.maxParticipants,
+                    description: event.description,
+                    mode: event.mode,
+                    venue: event.venue,
+                    contactPerson: event.contactPerson,
+                    contactEmail: event.contactEmail,
+                    contactPhone: event.contactPhone,
+                    isCollegeEvent: true,
+                    // Keep admin-specific fields
+                    eventType: event.eventType,
+                    createdByName: event.createdByName,
+                    createdByDepartment: event.createdByDepartment
+                };
+            }
+            // Regular event - ensure consistent field names
+            return {
+                ...event._doc,
+                id: event._id,
+                isCollegeEvent: false
+            };
+        });
 
         res.status(200).json({
             success: true,
-            count: events.length,
-            data: events
+            count: normalizedEvents.length,
+            data: normalizedEvents
         });
     } catch (error) {
         next(error);
@@ -221,10 +271,8 @@ exports.approveEvent = async (req, res, next) => {
             return next(new ErrorResponse('Event not found', 404));
         }
 
-        // Check permissions
-        if (req.user.role === 'ADMIN' && event.organizerDepartment !== req.user.department) {
-            return next(new ErrorResponse('Not authorized to approve this event', 403));
-        }
+        // Check permissions - Admin can approve events based on eligibility, not department
+        // No department restriction - admins can approve events they are eligible for
 
         const updatedEvent = await Event.findByIdAndUpdate(
             req.params.id,
@@ -259,10 +307,8 @@ exports.rejectEvent = async (req, res, next) => {
             return next(new ErrorResponse('Event not found', 404));
         }
 
-        // Check permissions
-        if (req.user.role === 'ADMIN' && event.organizerDepartment !== req.user.department) {
-            return next(new ErrorResponse('Not authorized to reject this event', 403));
-        }
+        // Check permissions - Admin can reject events based on eligibility, not department
+        // No department restriction - admins can reject events they are eligible for
 
         const updatedEvent = await Event.findByIdAndUpdate(
             req.params.id,
@@ -306,7 +352,6 @@ exports.getEventRegistrations = async (req, res, next) => {
         }
 
         const registrations = await Registration.find({ eventId: req.params.id })
-            .populate('studentEmail', 'name email department year')
             .sort({ registrationDate: -1 });
 
         res.status(200).json({
@@ -370,6 +415,25 @@ exports.registerForEvent = async (req, res, next) => {
             success: true,
             data: registration,
             message: 'Registration successful'
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// @desc    Get current student's registrations
+// @route   GET /api/events/registrations/me
+// @access  Private/Student
+exports.getMyRegistrations = async (req, res, next) => {
+    try {
+        const registrations = await Registration.find({ studentEmail: req.user.email })
+            .populate('eventId')
+            .sort({ registrationDate: -1 });
+
+        res.status(200).json({
+            success: true,
+            count: registrations.length,
+            data: registrations
         });
     } catch (error) {
         next(error);

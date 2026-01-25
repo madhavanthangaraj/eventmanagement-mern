@@ -39,13 +39,17 @@ const proofSchema = new mongoose.Schema({
         type: Number,
         required: [true, 'Student year is required']
     },
-    proofDocument: {
-        type: String,
-        required: [true, 'Proof document is required']
-    },
     proofDescription: {
         type: String,
         required: [true, 'Proof description is required']
+    },
+    organizationName: {
+        type: String,
+        required: [true, 'Organization name is required']
+    },
+    driveLink: {
+        type: String,
+        required: [true, 'Drive link is required']
     },
     status: {
         type: String,

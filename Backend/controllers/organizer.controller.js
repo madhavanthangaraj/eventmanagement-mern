@@ -30,8 +30,7 @@ exports.getDashboardStats = async (req, res, next) => {
         // Get recent events
         const recentEvents = await Event.find({ organizerEmail })
             .sort({ createdAt: -1 })
-            .limit(5)
-            .populate('registeredParticipants', 'name email');
+            .limit(5);
 
         // Get events with registration counts
         const eventsWithRegistrations = await Event.aggregate([
@@ -136,10 +135,16 @@ exports.getOrganizerRegistrations = async (req, res, next) => {
                 }
             },
             {
-                $unwind: '$event'
+                $unwind: {
+                    path: '$event',
+                    preserveNullAndEmptyArrays: true
+                }
             },
             {
-                $unwind: '$student'
+                $unwind: {
+                    path: '$student',
+                    preserveNullAndEmptyArrays: true
+                }
             },
             { $sort: { registrationDate: -1 } }
         ]);
@@ -167,7 +172,6 @@ exports.getOrganizerProofs = async (req, res, next) => {
 
         // Get proofs for organizer's events
         const proofs = await Proof.find({ eventId: { $in: eventIds } })
-            .populate('studentEmail', 'name email department year')
             .sort({ submittedAt: -1 });
 
         res.status(200).json({
@@ -193,7 +197,6 @@ exports.getOrganizerCredits = async (req, res, next) => {
 
         // Get credits for organizer's events
         const credits = await Credit.find({ eventId: { $in: eventIds } })
-            .populate('studentEmail', 'name email department year')
             .sort({ awardedAt: -1 });
 
         res.status(200).json({

@@ -15,8 +15,16 @@ router.post(
 router.get(
     '/',
     protect,
-    authorize(['ORGANIZER', 'ADMIN', 'SUPER_ADMIN']),
+    authorize(['ORGANIZER', 'ADMIN', 'SUPER_ADMIN', 'MENTOR', 'STUDENT']),
     eventController.getAllEvents
+);
+
+// Get current student's registrations
+router.get(
+    '/registrations/me',
+    protect,
+    authorize(['STUDENT']),
+    eventController.getMyRegistrations
 );
 
 // Get single event

@@ -41,7 +41,8 @@ const eventSchema = new mongoose.Schema({
     creditPoints: {
         type: Number,
         required: [true, 'Credit points is required'],
-        min: 0
+        min: 0,
+        default: 10
     },
     registrationDeadline: {
         type: Date,

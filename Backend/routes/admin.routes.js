@@ -15,7 +15,7 @@ router.post(
 router.get(
     '/users',
     protect,
-    authorize(['SUPER_ADMIN', 'ADMIN']),
+    authorize(['SUPER_ADMIN', 'ADMIN', 'MENTOR']),
     adminController.getUsers
 );
 
@@ -25,6 +25,38 @@ router.put(
     protect,
     authorize(['SUPER_ADMIN', 'ADMIN']),
     adminController.updateUserStatus
+);
+
+// Get all credits data
+router.get(
+    '/credits/all',
+    protect,
+    authorize(['SUPER_ADMIN', 'ADMIN']),
+    adminController.getAllCredits
+);
+
+// Get credits for a specific student
+router.get(
+    '/credits/:studentEmail',
+    protect,
+    authorize(['SUPER_ADMIN', 'ADMIN']),
+    adminController.getStudentCredits
+);
+
+// Get all proofs (admin accessible)
+router.get(
+    '/proofs',
+    protect,
+    authorize(['SUPER_ADMIN', 'ADMIN']),
+    adminController.getAllProofs
+);
+
+// Test route to verify admin routes are working
+router.get(
+    '/test',
+    (req, res) => {
+        res.json({ message: 'Admin routes are working', user: req.user });
+    }
 );
 
 module.exports = router;

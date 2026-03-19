@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars, react-hooks/exhaustive-deps */
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -46,7 +47,7 @@ const MODES = [
 
 const DEPARTMENTS = [
   'CSE',
-  'EEE', 
+  'EEE',
   'ECE',
   'CSBS',
   'CCE',
@@ -56,7 +57,7 @@ const DEPARTMENTS = [
 const CreateExternalEvent = () => {
   const { user, createEvent } = useAuth();
   const navigate = useNavigate();
-  
+
   const [formData, setFormData] = useState({
     eventName: '',
     category: '',
@@ -82,10 +83,10 @@ const CreateExternalEvent = () => {
 
   const validateStep = (step) => {
     const newErrors = {};
-    
+
     console.log('Validating step:', step);
     console.log('Current formData:', formData);
-    
+
     if (step === 0) {
       if (!formData.eventName.trim()) newErrors.eventName = 'Event name is required';
       if (!formData.category) newErrors.category = 'Category is required';
@@ -141,7 +142,7 @@ const CreateExternalEvent = () => {
         newErrors.posterUrl = 'Please enter a valid URL (include http:// or https://)';
       }
     }
-    
+
     console.log('Validation errors:', newErrors);
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -179,11 +180,11 @@ const CreateExternalEvent = () => {
     console.log('activeStep:', activeStep);
     console.log('Current formData:', formData);
     console.log('Current errors:', errors);
-    
+
     const isValid = validateStep(activeStep);
     console.log('Validation result:', isValid);
     console.log('Validation errors after check:', errors);
-    
+
     if (isValid) {
       console.log('Validation passed, moving to next step');
       setActiveStep((prevStep) => {
@@ -203,24 +204,24 @@ const CreateExternalEvent = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     console.log('handleSubmit called, activeStep:', activeStep);
-    
+
     if (!validateStep(activeStep)) {
       console.log('Validation failed, not proceeding');
       return;
     }
-    
+
     if (activeStep < 2) {
       console.log('Moving to next step');
       handleNext();
       return;
     }
-    
+
     console.log('Submitting event creation');
     try {
       setIsSubmitting(true);
-      
+
       // Prepare form data for submission
       const eventData = {
         eventName: formData.eventName,
@@ -245,7 +246,7 @@ const CreateExternalEvent = () => {
         organizerName: user.name,
         organizerDepartment: user.department,
       };
-      
+
       // Handle poster URL and file uploads
       if (formData.posterUrl) {
         // Use the poster URL if provided
@@ -255,18 +256,18 @@ const CreateExternalEvent = () => {
         // For now, we'll just store the file name
         eventData.posterUrl = formData.poster.name;
       }
-      
+
       if (formData.brochure) {
         // In a real app, upload the file and get the URL
         eventData.brochureUrl = formData.brochure.name;
       }
-      
+
       // Create the event
       await createEvent(eventData);
-      
+
       // Redirect to organizer's event list
       navigate('/organizer/my-events');
-      
+
     } catch (error) {
       console.error('Error creating event:', error);
       // Show error message to user
@@ -287,7 +288,7 @@ const CreateExternalEvent = () => {
               </Typography>
               <Divider sx={{ mb: 3, borderColor: 'primary.main' }} />
             </Grid>
-            
+
             <Grid item xs={12} md={6}>
               <TextField
                 fullWidth
@@ -301,7 +302,7 @@ const CreateExternalEvent = () => {
                 sx={{ '& .MuiInputLabel-root': { color: 'primary.main' } }}
               />
             </Grid>
-            
+
             <Grid item xs={12} md={6}>
               <FormControl fullWidth required error={!!errors.category} sx={{ marginBottom: 2 }}>
                 <InputLabel id="category-label" sx={{ color: 'primary.main' }}>Category *</InputLabel>
@@ -322,7 +323,7 @@ const CreateExternalEvent = () => {
                 {errors.category && <FormHelperText>{errors.category}</FormHelperText>}
               </FormControl>
             </Grid>
-            
+
             <Grid item xs={12}>
               <TextField
                 fullWidth
@@ -338,7 +339,7 @@ const CreateExternalEvent = () => {
                 sx={{ '& .MuiInputLabel-root': { color: 'primary.main' } }}
               />
             </Grid>
-            
+
             <Grid item xs={12}>
               <TextField
                 fullWidth
@@ -352,7 +353,7 @@ const CreateExternalEvent = () => {
                 sx={{ '& .MuiInputLabel-root': { color: 'primary.main' } }}
               />
             </Grid>
-            
+
             <Grid item xs={12} md={6}>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
@@ -360,9 +361,9 @@ const CreateExternalEvent = () => {
                   value={formData.startDate}
                   onChange={handleDateChange('startDate')}
                   renderInput={(params) => (
-                    <TextField 
-                      {...params} 
-                      fullWidth 
+                    <TextField
+                      {...params}
+                      fullWidth
                       error={!!errors.startDate}
                       helperText={errors.startDate}
                       sx={{ '& .MuiInputLabel-root': { color: 'primary.main' } }}
@@ -371,7 +372,7 @@ const CreateExternalEvent = () => {
                 />
               </LocalizationProvider>
             </Grid>
-            
+
             <Grid item xs={12} md={6}>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
@@ -380,9 +381,9 @@ const CreateExternalEvent = () => {
                   onChange={handleDateChange('endDate')}
                   minDate={formData.startDate || new Date()}
                   renderInput={(params) => (
-                    <TextField 
-                      {...params} 
-                      fullWidth 
+                    <TextField
+                      {...params}
+                      fullWidth
                       error={!!errors.endDate}
                       helperText={errors.endDate}
                       sx={{ '& .MuiInputLabel-root': { color: 'primary.main' } }}
@@ -391,7 +392,7 @@ const CreateExternalEvent = () => {
                 />
               </LocalizationProvider>
             </Grid>
-            
+
             <Grid item xs={12} md={6}>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
@@ -401,9 +402,9 @@ const CreateExternalEvent = () => {
                   minDate={new Date()}
                   maxDate={formData.startDate || new Date()}
                   renderInput={(params) => (
-                    <TextField 
-                      {...params} 
-                      fullWidth 
+                    <TextField
+                      {...params}
+                      fullWidth
                       error={!!errors.registrationDeadline}
                       helperText={errors.registrationDeadline || 'Last date for students to register'}
                       sx={{ '& .MuiInputLabel-root': { color: 'primary.main' } }}
@@ -412,7 +413,7 @@ const CreateExternalEvent = () => {
                 />
               </LocalizationProvider>
             </Grid>
-            
+
             <Grid item xs={12}>
               <FormControl fullWidth required error={!!errors.eligibility}>
                 <InputLabel id="eligibility-label" sx={{ color: 'primary.main' }}>
@@ -449,7 +450,7 @@ const CreateExternalEvent = () => {
             </Grid>
           </Grid>
         );
-        
+
       case 1:
         return (
           <Grid container spacing={3}>
@@ -459,7 +460,7 @@ const CreateExternalEvent = () => {
               </Typography>
               <Divider sx={{ mb: 3 }} />
             </Grid>
-            
+
             <Grid item xs={12}>
               <TextField
                 fullWidth
@@ -478,7 +479,7 @@ const CreateExternalEvent = () => {
                 }}
               />
             </Grid>
-            
+
             <Grid item xs={12} md={6}>
               <FormControl fullWidth error={!!errors.mode}>
                 <InputLabel id="mode-label">Event Mode *</InputLabel>
@@ -498,7 +499,7 @@ const CreateExternalEvent = () => {
                 {errors.mode && <FormHelperText>{errors.mode}</FormHelperText>}
               </FormControl>
             </Grid>
-            
+
             {formData.mode !== 'ONLINE' && (
               <Grid item xs={12} md={6}>
                 <TextField
@@ -513,7 +514,7 @@ const CreateExternalEvent = () => {
                 />
               </Grid>
             )}
-            
+
             {formData.mode === 'ONLINE' && (
               <Grid item xs={12}>
                 <TextField
@@ -526,7 +527,7 @@ const CreateExternalEvent = () => {
                 />
               </Grid>
             )}
-            
+
             <Grid item xs={12} md={6}>
               <TextField
                 fullWidth
@@ -541,7 +542,7 @@ const CreateExternalEvent = () => {
                 required
               />
             </Grid>
-            
+
             <Grid item xs={12}>
               <TextField
                 fullWidth
@@ -561,7 +562,7 @@ const CreateExternalEvent = () => {
             </Grid>
           </Grid>
         );
-        
+
       case 2:
         return (
           <Grid container spacing={3}>
@@ -571,7 +572,7 @@ const CreateExternalEvent = () => {
               </Typography>
               <Divider sx={{ mb: 3 }} />
             </Grid>
-            
+
             <Grid item xs={12}>
               <TextField
                 fullWidth
@@ -590,7 +591,7 @@ const CreateExternalEvent = () => {
                 }}
               />
             </Grid>
-            
+
             {/* <Grid item xs={12}>
               <input
                 accept="image/*"
@@ -690,12 +691,12 @@ const CreateExternalEvent = () => {
                 Upload event brochure or guidelines (PDF, max 10MB)
               </Typography>
             </Grid> */}
-            
+
             <Grid item xs={12}>
-              <Paper 
-                variant="outlined" 
-                sx={{ 
-                  p: 2, 
+              <Paper
+                variant="outlined"
+                sx={{
+                  p: 2,
                   bgcolor: 'background.default',
                   borderColor: 'primary.main',
                   borderWidth: 1,
@@ -726,7 +727,7 @@ const CreateExternalEvent = () => {
             </Grid>
           </Grid>
         );
-        
+
       default:
         return 'Unknown step';
     }
@@ -750,7 +751,7 @@ const CreateExternalEvent = () => {
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                 {[1, 2, 3].map((step) => (
                   <React.Fragment key={step}>
-                    <Box 
+                    <Box
                       sx={{
                         width: 36,
                         height: 36,
@@ -768,7 +769,7 @@ const CreateExternalEvent = () => {
                       {step}
                     </Box>
                     {step < 3 && (
-                      <Box 
+                      <Box
                         sx={{
                           flex: 1,
                           height: 2,
@@ -781,9 +782,9 @@ const CreateExternalEvent = () => {
                 ))}
               </Box>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', px: 1 }}>
-                <Typography 
-                  variant="caption" 
-                  sx={{ 
+                <Typography
+                  variant="caption"
+                  sx={{
                     color: activeStep >= 0 ? 'primary.main' : 'text.secondary',
                     fontWeight: activeStep === 0 ? 'bold' : 'normal',
                     textAlign: 'center',
@@ -792,9 +793,9 @@ const CreateExternalEvent = () => {
                 >
                   Basic Info
                 </Typography>
-                <Typography 
-                  variant="caption" 
-                  sx={{ 
+                <Typography
+                  variant="caption"
+                  sx={{
                     color: activeStep >= 1 ? 'primary.main' : 'text.secondary',
                     fontWeight: activeStep === 1 ? 'bold' : 'normal',
                     textAlign: 'center',
@@ -803,9 +804,9 @@ const CreateExternalEvent = () => {
                 >
                   Details
                 </Typography>
-                <Typography 
-                  variant="caption" 
-                  sx={{ 
+                <Typography
+                  variant="caption"
+                  sx={{
                     color: activeStep >= 2 ? 'primary.main' : 'text.secondary',
                     fontWeight: activeStep === 2 ? 'bold' : 'normal',
                     textAlign: 'center',
@@ -816,10 +817,10 @@ const CreateExternalEvent = () => {
                 </Typography>
               </Box>
             </Box>
-            
+
             <form onSubmit={handleSubmit}>
               {renderStepContent(activeStep)}
-              
+
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 4 }}>
                 <Button
                   disabled={activeStep === 0 || isSubmitting}
@@ -828,7 +829,7 @@ const CreateExternalEvent = () => {
                 >
                   Back
                 </Button>
-                
+
                 <Box>
                   {activeStep < 2 ? (
                     <Button

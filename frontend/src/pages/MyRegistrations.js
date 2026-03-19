@@ -45,7 +45,7 @@ const MyRegistrations = () => {
         setError(null);
 
         // Fetch registrations
-        const regResponse = await fetch('http://localhost:5000/api/events/registrations/me', {
+        const regResponse = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/events/registrations/me`, {
           headers: {
             'Authorization': `Bearer ${user?.token}`,
             'Content-Type': 'application/json',

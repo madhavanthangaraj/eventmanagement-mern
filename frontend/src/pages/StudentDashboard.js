@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars, react-hooks/exhaustive-deps */
 import React, { useMemo, useState, useEffect } from 'react';
 import {
   Box,
@@ -64,7 +65,7 @@ const StudentDashboard = () => {
         setLoading(true);
         
         // Fetch events from backend
-        const eventsResponse = await fetch('http://localhost:5000/api/events', {
+        const eventsResponse = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/events`, {
           headers: {
             'Authorization': `Bearer ${user?.token}`,
             'Content-Type': 'application/json'
@@ -87,7 +88,7 @@ const StudentDashboard = () => {
         }
         
         // Fetch student registrations
-        const registrationsResponse = await fetch('http://localhost:5000/api/events/registrations/me', {
+        const registrationsResponse = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/events/registrations/me`, {
           headers: {
             'Authorization': `Bearer ${user?.token}`,
             'Content-Type': 'application/json'

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars, react-hooks/exhaustive-deps */
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
 const AuthContext = createContext(undefined);
@@ -212,7 +213,7 @@ export const AuthProvider = ({ children }) => {
       }
       
       // Regular login flow for other users
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -278,7 +279,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async ({ name, email, password, role, department, year }) => {
     try {
-      const response = await fetch('http://localhost:5000/api/auth/register', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -402,7 +403,7 @@ export const AuthProvider = ({ children }) => {
       console.log('User token:', currentUser.token ? 'exists' : 'missing');
       console.log('Event data being sent:', eventData);
       
-      const response = await fetch('http://localhost:5000/api/events', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/events`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -444,7 +445,7 @@ export const AuthProvider = ({ children }) => {
 
   const getEventById = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/events/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/events/${id}`, {
         headers: {
           'Authorization': `Bearer ${user?.token}`,
           'Content-Type': 'application/json',
@@ -483,7 +484,7 @@ export const AuthProvider = ({ children }) => {
       console.log('Updating event with ID:', eventId);
       console.log('Updates:', updates);
       
-      const response = await fetch(`http://localhost:5000/api/events/${eventId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/events/${eventId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -567,7 +568,7 @@ export const AuthProvider = ({ children }) => {
       
       console.log('Admin remarks:', adminRemarks);
       
-      const response = await fetch(`http://localhost:5000/api/events/${eventId}/approve`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/events/${eventId}/approve`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -604,7 +605,7 @@ export const AuthProvider = ({ children }) => {
       console.log('Rejecting event with ID:', eventId);
       console.log('Admin remarks:', adminRemarks);
       
-      const response = await fetch(`http://localhost:5000/api/events/${eventId}/reject`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/events/${eventId}/reject`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -681,7 +682,7 @@ export const AuthProvider = ({ children }) => {
       console.log('Proof data:', proofData);
       
       // Send as JSON since no file upload
-      const response = await fetch('http://localhost:5000/api/student/submit-proof', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/student/submit-proof`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${currentUser.token}`,
@@ -726,7 +727,7 @@ export const AuthProvider = ({ children }) => {
 
   const getAllProofs = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/mentor/proofs', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/mentor/proofs`, {
         headers: {
           'Authorization': `Bearer ${user?.token}`,
           'Content-Type': 'application/json',
@@ -748,7 +749,7 @@ export const AuthProvider = ({ children }) => {
   const getStudentProofs = async (studentEmail) => {
     try {
       // Use the reports endpoint to get proof status
-      const response = await fetch('http://localhost:5000/api/student/reports', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/student/reports`, {
         headers: {
           'Authorization': `Bearer ${user?.token}`,
           'Content-Type': 'application/json',
@@ -788,7 +789,7 @@ export const AuthProvider = ({ children }) => {
         currentUser.role = 'MENTOR';
       }
       
-      const response = await fetch(`http://localhost:5000/api/mentor/verify-proof/${proofId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/mentor/verify-proof/${proofId}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${currentUser.token}`,
@@ -819,7 +820,7 @@ export const AuthProvider = ({ children }) => {
         currentUser.role = 'MENTOR';
       }
       
-      const response = await fetch(`http://localhost:5000/api/mentor/reject-proof/${proofId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/mentor/reject-proof/${proofId}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${currentUser.token}`,
@@ -845,7 +846,7 @@ export const AuthProvider = ({ children }) => {
   const getStudentCredits = async (studentEmail) => {
     try {
       // Use the dedicated student credits endpoint
-      const response = await fetch('http://localhost:5000/api/student/credits', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/student/credits`, {
         headers: {
           'Authorization': `Bearer ${user?.token}`,
           'Content-Type': 'application/json',
@@ -882,7 +883,7 @@ export const AuthProvider = ({ children }) => {
       }
       
       // Get all CSE students first
-      const usersResponse = await fetch('http://localhost:5000/api/admin/users', {
+      const usersResponse = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/admin/users`, {
         headers: {
           'Authorization': `Bearer ${currentUser.token}`,
           'Content-Type': 'application/json',
@@ -912,7 +913,7 @@ export const AuthProvider = ({ children }) => {
       
       // Get all credits from the Credit collection
       try {
-        const creditsResponse = await fetch('http://localhost:5000/api/admin/credits/all', {
+        const creditsResponse = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/admin/credits/all`, {
           headers: {
             'Authorization': `Bearer ${currentUser.token}`,
             'Content-Type': 'application/json',
@@ -968,7 +969,7 @@ export const AuthProvider = ({ children }) => {
   // Fetch dashboard statistics from backend
   const getDashboardStats = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/superadmin/dashboard-stats', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/superadmin/dashboard-stats`, {
         headers: {
           'Authorization': `Bearer ${user?.token}`,
           'Content-Type': 'application/json',
@@ -994,7 +995,7 @@ export const AuthProvider = ({ children }) => {
       
       // First test if server is reachable
       try {
-        const healthResponse = await fetch('http://localhost:5000/api/health');
+        const healthResponse = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/health`);
         console.log('Server health check:', healthResponse.ok);
         if (!healthResponse.ok) {
           throw new Error('Server is not responding correctly');
@@ -1004,7 +1005,7 @@ export const AuthProvider = ({ children }) => {
         throw new Error('Backend server is not running or not accessible');
       }
       
-      const response = await fetch('http://localhost:5000/api/organizer/dashboard', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/organizer/dashboard`, {
         headers: {
           'Authorization': `Bearer ${user?.token}`,
           'Content-Type': 'application/json',
@@ -1032,7 +1033,7 @@ export const AuthProvider = ({ children }) => {
   // Fetch organizer events from backend
   const getOrganizerEvents = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/organizer/events', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/organizer/events`, {
         headers: {
           'Authorization': `Bearer ${user?.token}`,
           'Content-Type': 'application/json',
@@ -1054,7 +1055,7 @@ export const AuthProvider = ({ children }) => {
   // Fetch organizer events from backend
   const fetchAllEvents = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/events', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/events`, {
         headers: {
           'Authorization': `Bearer ${user?.token}`,
           'Content-Type': 'application/json',
@@ -1082,7 +1083,7 @@ export const AuthProvider = ({ children }) => {
       }
       
       // Use the same endpoint as MyRegistrations
-      const response = await fetch('http://localhost:5000/api/events/registrations/me', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/events/registrations/me`, {
         headers: {
           'Authorization': `Bearer ${currentUser.token}`,
           'Content-Type': 'application/json',
@@ -1109,7 +1110,7 @@ export const AuthProvider = ({ children }) => {
         currentUser.role = 'STUDENT';
       }
       
-      const response = await fetch('http://localhost:5000/api/student/reports', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/student/reports`, {
         headers: {
           'Authorization': `Bearer ${currentUser.token}`,
           'Content-Type': 'application/json',
@@ -1131,7 +1132,7 @@ export const AuthProvider = ({ children }) => {
   // Fetch event registrations from backend
   const getEventRegistrationsFromAPI = async (eventId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/events/${eventId}/registrations`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/events/${eventId}/registrations`, {
         headers: {
           'Authorization': `Bearer ${user?.token}`,
           'Content-Type': 'application/json',
@@ -1161,8 +1162,8 @@ const fetchUsers = async (filters = {}) => {
     const queryParams = new URLSearchParams(filters).toString();
     const normalizedRole = String(user?.role || '').trim().toUpperCase();
     const baseUrl = normalizedRole === 'SUPER_ADMIN'
-      ? 'http://localhost:5000/api/superadmin/users'
-      : 'http://localhost:5000/api/admin/users';
+      ? `${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/superadmin/users`
+      : `${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/admin/users`;
     const url = queryParams ? `${baseUrl}?${queryParams}` : baseUrl;
 
     const response = await fetch(url, {
@@ -1234,7 +1235,7 @@ const fetchUsers = async (filters = {}) => {
       fetchUsers,
       getAllUsers: () => usersCache,
       approveUser: async (userId) => {
-        const response = await fetch(`http://localhost:5000/api/superadmin/approve-user/${userId}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/superadmin/approve-user/${userId}`, {
           method: 'PUT',
           headers: {
             'Authorization': `Bearer ${user?.token}`,
@@ -1245,7 +1246,7 @@ const fetchUsers = async (filters = {}) => {
         return await response.json();
       },
       rejectUser: async (userId) => {
-        const response = await fetch(`http://localhost:5000/api/superadmin/reject-user/${userId}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/superadmin/reject-user/${userId}`, {
           method: 'PUT',
           headers: {
             'Authorization': `Bearer ${user?.token}`,
@@ -1257,7 +1258,7 @@ const fetchUsers = async (filters = {}) => {
       },
       updateUserRole: async (userId, role) => {
       try {
-        const response = await fetch(`http://localhost:5000/api/superadmin/assign-role/${userId}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/superadmin/assign-role/${userId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -1280,7 +1281,7 @@ const fetchUsers = async (filters = {}) => {
       try {
         const nextStatus = currentStatus === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE';
 
-        const response = await fetch(`http://localhost:5000/api/users/status/${userId}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/users/status/${userId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',

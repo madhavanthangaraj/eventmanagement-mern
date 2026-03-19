@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars, react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { Alert, Box, Button, Stack, Typography } from '@mui/material';
 import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';

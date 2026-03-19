@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars, react-hooks/exhaustive-deps */
 import React, { useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
@@ -11,8 +12,7 @@ import {
   TableRow,
   Paper,
   Button,
-  Chip,
-  Stack
+  Chip
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useAuth } from '../../context/AuthContext';

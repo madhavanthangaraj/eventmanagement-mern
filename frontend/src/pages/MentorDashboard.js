@@ -67,7 +67,7 @@ const MentorDashboard = () => {
         setAllProofs(Array.isArray(proofsData) ? proofsData : []);
         
         // Fetch department users
-        const usersResponse = await fetch('http://localhost:5000/api/admin/users', {
+        const usersResponse = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/admin/users`, {
           headers: {
             'Authorization': `Bearer ${user?.token}`,
             'Content-Type': 'application/json'
@@ -75,7 +75,7 @@ const MentorDashboard = () => {
         });
         
         // Fetch department events
-        const eventsResponse = await fetch('http://localhost:5000/api/events', {
+        const eventsResponse = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/events`, {
           headers: {
             'Authorization': `Bearer ${user?.token}`,
             'Content-Type': 'application/json'

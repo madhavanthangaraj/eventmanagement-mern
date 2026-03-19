@@ -64,7 +64,7 @@ const AdminEventManagement = () => {
   const loadEvents = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:5000/api/admin/events', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/admin/events`, {
         headers: {
           'Authorization': `Bearer ${user?.token}`,
           'Content-Type': 'application/json'
@@ -151,8 +151,8 @@ const AdminEventManagement = () => {
 
     try {
       const url = editingEvent 
-        ? `http://localhost:5000/api/admin/events/${editingEvent._id}`
-        : 'http://localhost:5000/api/admin/events';
+        ? `${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/admin/events/${editingEvent._id}`
+        : `${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/admin/events`;
       
       const method = editingEvent ? 'PUT' : 'POST';
       
@@ -185,7 +185,7 @@ const AdminEventManagement = () => {
   const handleDelete = async () => {
     if (deleteDialog) {
       try {
-        const response = await fetch(`http://localhost:5000/api/admin/events/${deleteDialog._id}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/admin/events/${deleteDialog._id}`, {
           method: 'DELETE',
           headers: {
             'Authorization': `Bearer ${user?.token}`,

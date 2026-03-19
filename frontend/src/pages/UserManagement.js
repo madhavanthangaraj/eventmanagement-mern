@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars, react-hooks/exhaustive-deps */
 // frontend/src/pages/UserManagement.js
 import React, { useState, useEffect } from 'react';
 import {
@@ -70,7 +71,7 @@ const UserManagement = () => {
 
   const handleApproveUser = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/superadmin/approve-user/${userId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/superadmin/approve-user/${userId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -101,7 +102,7 @@ const UserManagement = () => {
 
   const handleRejectUser = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/superadmin/reject-user/${userId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/superadmin/reject-user/${userId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

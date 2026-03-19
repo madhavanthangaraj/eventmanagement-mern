@@ -52,7 +52,7 @@ const AvailableEvents = () => {
         setLoading(true);
         setError(null);
         
-        const response = await fetch('http://localhost:5000/api/events', {
+        const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/events`, {
           headers: {
             'Authorization': `Bearer ${user?.token}`,
             'Content-Type': 'application/json'
@@ -81,7 +81,7 @@ const AvailableEvents = () => {
   useEffect(() => {
     const fetchMyRegistrations = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/events/registrations/me', {
+        const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/events/registrations/me`, {
           headers: {
             'Authorization': `Bearer ${user?.token}`,
             'Content-Type': 'application/json'
@@ -190,7 +190,7 @@ const AvailableEvents = () => {
       (async () => {
         try {
           const eventId = event._id || event.id;
-          const response = await fetch(`http://localhost:5000/api/events/${eventId}/register`, {
+          const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/events/${eventId}/register`, {
             method: 'POST',
             headers: {
               'Authorization': `Bearer ${user?.token}`,
@@ -210,13 +210,13 @@ const AvailableEvents = () => {
           closeConfirmDialog();
 
           const [eventsRes, regsRes] = await Promise.all([
-            fetch('http://localhost:5000/api/events', {
+            fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/events`, {
               headers: {
                 'Authorization': `Bearer ${user?.token}`,
                 'Content-Type': 'application/json'
               }
             }),
-            fetch('http://localhost:5000/api/events/registrations/me', {
+            fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/events/registrations/me`, {
               headers: {
                 'Authorization': `Bearer ${user?.token}`,
                 'Content-Type': 'application/json'

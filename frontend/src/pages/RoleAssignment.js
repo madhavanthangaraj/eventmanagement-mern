@@ -46,7 +46,7 @@ const RoleAssignment = () => {
 
   const handleStatusToggle = async (userId, currentStatus) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/superadmin/toggle-status/${userId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/superadmin/toggle-status/${userId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ const RoleAssignment = () => {
 
   const handleApproveUser = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/superadmin/approve-user/${userId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/superadmin/approve-user/${userId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -102,7 +102,7 @@ const RoleAssignment = () => {
 
   const handleRejectUser = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/superadmin/reject-user/${userId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://eventmanagement-mern-fxel.onrender.com'}/api/superadmin/reject-user/${userId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

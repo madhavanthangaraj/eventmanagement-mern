@@ -575,7 +575,7 @@ const CreateExternalEvent = () => {
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                label="Event Poster URL (Optional)"
+                label="Event Poster URL"
                 name="posterUrl"
                 value={formData.posterUrl}
                 onChange={handleChange('posterUrl')}
@@ -591,7 +591,7 @@ const CreateExternalEvent = () => {
               />
             </Grid>
             
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <input
                 accept="image/*"
                 style={{ display: 'none' }}
@@ -689,7 +689,7 @@ const CreateExternalEvent = () => {
               <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
                 Upload event brochure or guidelines (PDF, max 10MB)
               </Typography>
-            </Grid>
+            </Grid> */}
             
             <Grid item xs={12}>
               <Paper 

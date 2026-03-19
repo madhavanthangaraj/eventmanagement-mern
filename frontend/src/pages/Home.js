@@ -5,15 +5,15 @@ import { keyframes } from '@mui/system';
 import EventIcon from '@mui/icons-material/Event';
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
-import SchoolIcon from '@mui/icons-material/School';
+
 import GroupIcon from '@mui/icons-material/Group';
-import StarIcon from '@mui/icons-material/Star';
+
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import HandshakeIcon from '@mui/icons-material/Handshake';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
-import InsightsIcon from '@mui/icons-material/Insights';
+
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
@@ -55,10 +55,7 @@ const slideInRight = keyframes`
   to   { opacity: 1; transform: translateX(0); }
 `;
 
-const glowPulse = keyframes`
-  0%, 100% { text-shadow: 0 0 20px rgba(0,242,254,0.3), 0 0 40px rgba(0,242,254,0.1); }
-  50%       { text-shadow: 0 0 40px rgba(0,242,254,0.7), 0 0 80px rgba(79,172,254,0.3); }
-`;
+
 
 /* Big card data */
 const bigCards = [
